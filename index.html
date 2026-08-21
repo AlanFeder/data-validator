@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Local browser mock for validating Excel workbooks"
+    />
+    <title>Excel Validation Mock</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell header-content">
+        <div>
+          <p class="eyebrow">Browser-only prototype</p>
+          <h1>Excel Validation</h1>
+        </div>
+        <span class="privacy-badge">Workbook stays on this device</span>
+      </div>
+    </header>
+
+    <main class="shell main-content">
+      <section class="intro" aria-labelledby="intro-title">
+        <div>
+          <p class="eyebrow">Temporary schema</p>
+          <h2 id="intro-title">Check a workbook before it moves downstream.</h2>
+          <p>
+            Upload an <code>.xlsx</code> file with the columns
+            <strong>Name</strong>, <strong>Email</strong>,
+            <strong>Legacy Code</strong>, and <strong>Some Code</strong>.
+            Validation runs in a background worker in your browser.
+          </p>
+        </div>
+        <button id="sample-button" class="button button-secondary" type="button">
+          Download mock workbook
+        </button>
+      </section>
+
+      <section class="panel upload-panel" aria-labelledby="upload-title">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">Step 1</p>
+            <h2 id="upload-title">Choose a workbook</h2>
+          </div>
+          <p>Only <code>.xlsx</code> is supported in this mock.</p>
+        </div>
+
+        <label class="file-picker" for="workbook-input">
+          <span class="file-picker-title">Select an Excel workbook</span>
+          <span id="file-name" class="file-picker-detail">No file selected</span>
+          <input id="workbook-input" type="file" accept=".xlsx" />
+        </label>
+
+        <div class="action-row">
+          <button id="validate-button" class="button button-primary" type="button" disabled>
+            Validate workbook
+          </button>
+          <p id="status-text" class="status-text" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="results" class="panel results-panel" aria-labelledby="results-title" hidden>
+        <div class="section-heading results-heading">
+          <div>
+            <p class="step-label">Step 2</p>
+            <h2 id="results-title">Validation results</h2>
+            <p id="sheet-name"></p>
+          </div>
+          <button id="download-button" class="button button-primary" type="button" hidden>
+            Download corrected workbook
+          </button>
+        </div>
+
+        <div id="result-banner" class="result-banner"></div>
+
+        <dl class="summary-grid">
+          <div><dt>Rows processed</dt><dd id="total-rows">0</dd></div>
+          <div><dt>Valid rows</dt><dd id="valid-rows">0</dd></div>
+          <div class="summary-error"><dt>Errors</dt><dd id="error-count">0</dd></div>
+          <div class="summary-warning"><dt>Warnings</dt><dd id="warning-count">0</dd></div>
+          <div class="summary-fix"><dt>Automatic fixes</dt><dd id="fix-count">0</dd></div>
+        </dl>
+
+        <div class="result-section">
+          <h3>Errors and warnings</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Severity</th><th>Row</th><th>Column</th><th>Code</th><th>Message</th></tr>
+              </thead>
+              <tbody id="issues-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h3>Automatic fix audit</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Row</th><th>Column</th><th>Code</th><th>Before</th><th>After</th><th>Message</th></tr>
+              </thead>
+              <tbody id="fixes-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/ui/main.ts"></script>
+  </body>
+</html>
