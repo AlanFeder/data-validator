@@ -55,3 +55,12 @@ npm run validate
 ```
 
 This runs strict TypeScript checking and the Vitest suite.
+
+
+## Dependency security maintenance
+
+The ExcelJS UUID override keeps its CommonJS-compatible UUID API while moving to a patched release. Workbook validation tests, type checking, and the production build pass.
+
+Use Node 24.12 or newer for the checked build. The committed lockfile audits clean,
+and CI runs dependency auditing, available tests, and production builds without
+deploying. Dependabot checks dependency versions weekly.
